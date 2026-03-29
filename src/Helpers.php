@@ -59,7 +59,7 @@ class Helpers
     public static function build_url($protocol, $host, $base_path, $url, $chrootDirs = [])
     {
         $protocol = mb_strtolower($protocol, "UTF-8");
-        if (empty($protocol)) {
+        if (empty($protocol) || $protocol === "data://") {
             $protocol = "file://";
         }
         if ($url === "") {
