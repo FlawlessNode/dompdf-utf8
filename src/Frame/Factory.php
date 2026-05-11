@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\Frame;
@@ -23,7 +23,7 @@ use DOMXPath;
  * objects.  This is determined primarily by the Frame's display type, but
  * also by the Frame's node's type (e.g. DomElement vs. #text)
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class Factory
 {

@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf;
@@ -17,7 +17,7 @@ namespace Dompdf;
  * are free to use a unit other than points for length, but I can't
  * guarantee that the results will look any good.
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 interface Canvas
 {

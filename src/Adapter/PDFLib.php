@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\Adapter;
@@ -26,7 +26,7 @@ use Dompdf\Image\Cache;
  * See {@link http://www.pdflib.com/} for more complete documentation
  * on the underlying PDFlib functions.
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class PDFLib implements Canvas
 {

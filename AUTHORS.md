@@ -17,7 +17,7 @@ Dompdf was designed and developed by Benj Carson.
 * **Barry vd. Heuvel**
 * **Ryan H. Masten**
 * **Helmut Tischer**
-* [and many more...](https://github.com/dompdf/dompdf/graphs/contributors)
+* [and many more...](https://github.com/flawlessnode/dompdf-utf8/graphs/contributors)
 
 ### Thanks
 

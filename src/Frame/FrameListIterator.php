@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\Frame;
@@ -15,7 +15,7 @@ use Dompdf\Frame;
  * Returns children in order and allows for the list to change during iteration,
  * provided the changes occur to or after the current element.
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class FrameListIterator implements Iterator
 {

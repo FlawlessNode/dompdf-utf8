@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\FrameReflower;
@@ -26,7 +26,7 @@ use Dompdf\FrameDecorator\Block;
  * Reflower objects are responsible for determining the width and height of
  * individual frames.  They also create line and page breaks as necessary.
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 abstract class AbstractFrameReflower
 {

@@ -51,9 +51,9 @@ class Release
         mkdir($tempDir);
         chdir($tempDir);
         $this->exec("$composer init --type project");
-        $this->exec("$composer require --fixed dompdf/dompdf");
+        $this->exec("$composer require --fixed flawlessnode/dompdf-utf8");
         $this->exec("rm composer.json composer.lock");
-        $this->exec("cp vendor/dompdf/dompdf/*.md vendor/dompdf/dompdf/LICENSE.LGPL vendor/dompdf/dompdf/VERSION .");
+        $this->exec("cp vendor/flawlessnode/dompdf-utf8/*.md vendor/flawlessnode/dompdf-utf8/LICENSE.LGPL vendor/flawlessnode/dompdf-utf8/VERSION .");
 
         file_put_contents($tempDir . '/autoload.inc.php', "<?php require (__DIR__ . '/vendor/autoload.php');");
 

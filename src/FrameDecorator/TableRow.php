@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\FrameDecorator;
@@ -12,7 +12,7 @@ use Dompdf\Frame;
 /**
  * Decorates Frames for table row layout
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class TableRow extends AbstractFrameDecorator
 {

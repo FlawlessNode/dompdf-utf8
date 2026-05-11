@@ -16,22 +16,10 @@ jobs:
     strategy:
       max-parallel: 12
       matrix:
-        php: ['7.1', '7.2', '7.3', '7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+        php: ['8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
         package-release: [dist]
         extensions: ['gd']
         include:
-          - php: '7.1'
-            package-release: 'dist'
-            extensions: 'gmagick'
-          - php: '7.1'
-            package-release: 'dist'
-            extensions: 'imagick'
-          - php: '7.4'
-            package-release: 'dist'
-            extensions: 'gmagick'
-          - php: '7.4'
-            package-release: 'dist'
-            extensions: 'imagick'
           - php: '8.0'
             package-release: 'dist'
             extensions: 'gmagick'
@@ -42,12 +30,15 @@ jobs:
             package-release: 'dist'
             extensions: 'gmagick'
           - php: '8.4'
+            package-release: 'dist'
+            extensions: 'imagick'
+          - php: '8.5'
             package-release: 'dist'
             extensions: 'imagick'
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
@@ -56,7 +47,7 @@ jobs:
           extensions: exif,json,mbstring,dom,${{ matrix.extensions }}
 
       - name: Install composer dependencies
-        uses: ramsey/composer-install@v3
+        uses: ramsey/composer-install@v4
         with:
           dependency-versions: ${{ matrix.package-release }}
 
@@ -75,14 +66,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: failed-output-tests
-          path: /home/runner/work/dompdf/dompdf/tmp/failed-output-tests
+          path: /home/runner/work/flawlessnode/dompdf-utf8/tmp/failed-output-tests
           if-no-files-found: ignore
 
       - name: Run code sniffer
         run: vendor/bin/phpcs --standard=phpcs.xml src tests lib
-
-      # - name: Upload to Scrutinizer
-      #   continue-on-error: true
-      #   run: |
-      #     wget https://scrutinizer-ci.com/ocular.phar
-      #     php ocular.phar code-coverage:upload --format=php-clover coverage.clover

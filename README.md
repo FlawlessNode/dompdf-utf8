@@ -1,35 +1,5 @@
-Dompdf
+Dompdf UTF-8
 ======
-
-[![Build Status](https://github.com/dompdf/dompdf/actions/workflows/test.yml/badge.svg)](https://github.com/dompdf/dompdf/actions/workflows/test.yml)
-[![PHP Versions Supported](https://poser.pugx.org/dompdf/dompdf/require/php)](https://packagist.org/packages/dompdf/dompdf)
-[![Latest Release](https://poser.pugx.org/dompdf/dompdf/v)](https://packagist.org/packages/dompdf/dompdf)
-[![Total Downloads](https://poser.pugx.org/dompdf/dompdf/downloads)](https://packagist.org/packages/dompdf/dompdf)
-[![License](https://poser.pugx.org/dompdf/dompdf/license)](https://packagist.org/packages/dompdf/dompdf)
- 
-**Dompdf is an HTML to PDF converter**
-
-At its heart, dompdf is (mostly) a [CSS 2.1](http://www.w3.org/TR/CSS2/) compliant
-HTML layout and rendering engine written in PHP. It is a style-driven renderer:
-it will download and read external stylesheets, inline style tags, and the style
-attributes of individual HTML elements. It also supports most presentational
-HTML attributes.
-
-*This document applies to the latest stable code which may not reflect the current 
-release. For released code please
-[navigate to the appropriate tag](https://github.com/dompdf/dompdf/tags).*
-
-----
-
-**Check out the [demo](http://eclecticgeek.com/dompdf/debug.php) and ask any
-question on [StackOverflow](https://stackoverflow.com/questions/tagged/dompdf) or
-in [Discussions](https://github.com/dompdf/dompdf/discussions).**
-
-Follow us on [![Twitter](http://twitter-badges.s3.amazonaws.com/twitter-a.png)](http://www.twitter.com/dompdf).
-
----
-
-
 
 ## Features
 
@@ -47,7 +17,7 @@ Follow us on [![Twitter](http://twitter-badges.s3.amazonaws.com/twitter-a.png)](
  
 ## Requirements
 
- * PHP version 7.1 or higher
+ * PHP version 8.0 or higher
  * DOM extension
  * MBString extension
  * php-font-lib
@@ -63,7 +33,7 @@ Note that some required dependencies may have further dependencies
  * OPcache (OPcache, XCache, APC, etc.): improves performance
 
 Visit the wiki for more information:
-https://github.com/dompdf/dompdf/wiki/Requirements
+https://github.com/flawlessnode/dompdf-utf8/wiki/Requirements
 
 ## About Fonts & Character Encoding
 
@@ -73,7 +43,7 @@ encoding. In order for a PDF to display characters that are not available in
 Windows ANSI, you must supply an external font. Dompdf will embed any referenced
 font in the PDF so long as it has been pre-loaded or is accessible to dompdf and
 reference in CSS @font-face rules. See the
-[font overview](https://github.com/dompdf/dompdf/wiki/About-Fonts-and-Character-Encoding)
+[font overview](https://github.com/flawlessnode/dompdf-utf8/wiki/About-Fonts-and-Character-Encoding)
 for more information on how to use fonts.
 
 The [DejaVu TrueType fonts](https://dejavu-fonts.github.io/) have been pre-installed
@@ -90,7 +60,7 @@ To install with [Composer](https://getcomposer.org/), simply require the
 latest version of this package.
 
 ```bash
-composer require dompdf/dompdf
+composer require flawlessnode/dompdf-utf8
 ```
 
 Make sure that the autoload file from Composer is loaded.
@@ -100,62 +70,6 @@ Make sure that the autoload file from Composer is loaded.
 // see: http://getcomposer.org/doc/00-intro.md
 require 'vendor/autoload.php';
 ```
-
-### Download and install
-
-Download a packaged archive of dompdf and extract it into the 
-directory where dompdf will reside
-
- * You can download stable copies of dompdf from
-   https://github.com/dompdf/dompdf/releases
- * Or download a nightly (the latest, unreleased code) from
-   http://eclecticgeek.com/dompdf
-
-Use the packaged release autoloader to load dompdf, libraries,
-and helper functions in your PHP:
-
-```php
-// include autoloader
-require_once 'dompdf/autoload.inc.php';
-```
-
-Note: packaged releases are named according using semantic
-versioning (_dompdf_MAJOR-MINOR-PATCH.zip_). So the 1.0.0 
-release would be dompdf_1-0-0.zip. This is the only download
-that includes the autoloader for Dompdf and all its dependencies.
-
-### Install with git
-
-From the command line, switch to the directory where dompdf will
-reside and run the following commands:
-
-```sh
-git clone https://github.com/dompdf/dompdf.git
-cd dompdf/lib
-
-git clone https://github.com/PhenX/php-font-lib.git php-font-lib
-cd php-font-lib
-git checkout 0.5.1
-cd ..
-
-git clone https://github.com/PhenX/php-svg-lib.git php-svg-lib
-cd php-svg-lib
-git checkout v0.3.2
-cd ..
-
-git clone https://github.com/sabberworm/PHP-CSS-Parser.git php-css-parser
-cd php-css-parser
-git checkout 8.1.0
-```
-
-Require dompdf and it's dependencies in your PHP.
-For details see the [autoloader in the utils project](https://github.com/dompdf/utils/blob/master/autoload.inc.php).
-
-## Framework Integration
-
-* For Symfony: [nucleos/dompdf-bundle](https://github.com/nucleos/NucleosDompdfBundle)
-* For Laravel: [barryvdh/laravel-dompdf](https://github.com/barryvdh/laravel-dompdf)
-* For Redaxo: [PdfOut](https://github.com/FriendsOfREDAXO/pdfout)
 
 ## Quick Start
 
@@ -220,15 +134,15 @@ Files accessed through the local file system have the following requirement:
 
 ## Limitations (Known Issues)
 
- * Table cells are not pageable, meaning a table row must fit on a single page: See https://github.com/dompdf/dompdf/issues/98
+ * Table cells are not pageable, meaning a table row must fit on a single page: See https://github.com/flawlessnode/dompdf-utf8/issues/98
  * Elements are rendered on the active page when they are parsed.
- * Embedding "raw" SVG's (`<svg><path...></svg>`) isn't working yet: See https://github.com/dompdf/dompdf/issues/320  
+ * Embedding "raw" SVG's (`<svg><path...></svg>`) isn't working yet: See https://github.com/flawlessnode/dompdf-utf8/issues/320  
    Workaround: Either link to an external SVG file, or use a DataURI like this:
      ```php
      $html = '<img src="data:image/svg+xml;base64,' . base64_encode($svg) . '">';
      ```
- * Does not support CSS flexbox: See https://github.com/dompdf/dompdf/issues/971
- * Does not support CSS Grid: See https://github.com/dompdf/dompdf/issues/2988
+ * Does not support CSS flexbox: See https://github.com/flawlessnode/dompdf-utf8/issues/971
+ * Does not support CSS Grid: See https://github.com/flawlessnode/dompdf-utf8/issues/2988
  * A single Dompdf instance should not be used to render more than one HTML document
    because persisted parsing and rendering artifacts can impact future renders.
 ---

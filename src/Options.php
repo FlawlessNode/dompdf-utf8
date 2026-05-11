@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf;
@@ -61,7 +61,7 @@ class Options
      * This setting may increase the risk of system exploit. Do not change
      * this settings without understanding the consequences. Additional
      * documentation is available on the dompdf wiki at:
-     * https://github.com/dompdf/dompdf/wiki
+     * https://github.com/flawlessnode/dompdf-utf8/wiki
      *
      * @var array
      */
@@ -178,7 +178,7 @@ class Options
      * This setting may increase the risk of system exploit. Do not change
      * this settings without understanding the consequences. Additional
      * documentation is available on the dompdf wiki at:
-     * https://github.com/dompdf/dompdf/wiki
+     * https://github.com/flawlessnode/dompdf-utf8/wiki
      *
      * @var bool
      */
@@ -200,7 +200,7 @@ class Options
      * This setting may increase the risk of system exploit. Do not change
      * this settings without understanding the consequences. Additional
      * documentation is available on the dompdf wiki at:
-     * https://github.com/dompdf/dompdf/wiki
+     * https://github.com/flawlessnode/dompdf-utf8/wiki
      *
      * @var bool
      */
@@ -365,7 +365,7 @@ class Options
         $this->setHttpContext([
             "http" => [
                 "follow_location" => false,
-                "user_agent" => "Dompdf$ver https://github.com/dompdf/dompdf"
+                "user_agent" => "Dompdf$ver https://github.com/flawlessnode/dompdf-utf8"
             ]
         ]);
 

@@ -76,5 +76,11 @@
         "bold_italic": "DejaVuSerif-BoldItalic",
         "italic": "DejaVuSerif-Italic",
         "normal": "DejaVuSerif"
+    },
+    "droid sans fallback": {
+        "bold": "DroidSansFallback",
+        "bold_italic": "DroidSansFallback",
+        "italic": "DroidSansFallback",
+        "normal": "DroidSansFallback"
     }
 }

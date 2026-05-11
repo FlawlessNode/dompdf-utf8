@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\FrameReflower;
@@ -14,7 +14,7 @@ use Dompdf\FrameDecorator\TableRowGroup as TableRowGroupFrameDecorator;
 /**
  * Reflows table row groups (e.g. tbody tags)
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class TableRowGroup extends AbstractFrameReflower
 {

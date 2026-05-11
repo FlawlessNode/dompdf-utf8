@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf;
@@ -20,7 +20,7 @@ use Iterator;
  * This class represents a line box
  * http://www.w3.org/TR/CSS2/visuren.html#line-box
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class LineBox
 {

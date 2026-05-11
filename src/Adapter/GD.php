@@ -1,7 +1,7 @@
 <?php
 /**
- * @package dompdf
- * @link    https://github.com/dompdf/dompdf
+ * @package dompdf-utf8
+ * @link    https://github.com/flawlessnode/dompdf-utf8
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License
  */
 namespace Dompdf\Adapter;
@@ -17,7 +17,7 @@ use Dompdf\Image\Cache;
  * Renders to an image format supported by GD (jpeg, gif, png, xpm).
  * Not super-useful day-to-day but handy nonetheless
  *
- * @package dompdf
+ * @package dompdf-utf8
  */
 class GD implements Canvas
 {
