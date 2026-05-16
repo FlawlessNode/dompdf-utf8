@@ -155,7 +155,7 @@ class Cache
 
                                 $inner_full_url = Helpers::build_url($parsed_url["protocol"], $parsed_url["host"], $parsed_url["path"], $url, $options->getChroot());
                                 if (empty($inner_full_url)) {
-                                    continue;
+                                    throw new ImageException("This SVG document references a resource that could not be resolved.", E_WARNING);
                                 }
                                 
                                 self::detectCircularRef($full_url, $inner_full_url);
