@@ -403,6 +403,60 @@ class OptionsTest extends TestCase
         $this->assertTrue($validation_result);
     }
 
+    public function testValidateLocalUriRejectsSiblingPathWithMatchingPrefix()
+    {
+        $baseDir = sys_get_temp_dir() . "/dompdf-options-" . uniqid("", true);
+        $chrootDir = $baseDir . "/sandbox/root";
+        $insideFile = $chrootDir . "/inside.html";
+        $prefixedOutsideFile = $baseDir . "/sandbox/root_secret/secret.html";
+
+        mkdir(dirname($insideFile), 0777, true);
+        mkdir(dirname($prefixedOutsideFile), 0777, true);
+        file_put_contents($insideFile, "<html><body>inside</body></html>");
+        file_put_contents($prefixedOutsideFile, "<html><body>outside</body></html>");
+
+        try {
+            $options = new Options();
+            $options->setChroot([$chrootDir]);
+            $options->setRootDir($baseDir . "/not-used");
+
+            [$insideValid, $insideMessage] = $options->validateLocalUri("file://" . $insideFile);
+            [$outsideValid, $outsideMessage] = $options->validateLocalUri("file://" . $prefixedOutsideFile);
+
+            $this->assertTrue($insideValid);
+            $this->assertNull($insideMessage);
+            $this->assertFalse($outsideValid);
+            $this->assertSame(
+                "Permission denied. The file could not be found under the paths specified by Options::chroot.",
+                $outsideMessage
+            );
+        } finally {
+            $this->removeDirectory($baseDir);
+        }
+    }
+
+    public function testValidateLocalUriReturnsFileNotFoundForMissingPath()
+    {
+        $baseDir = sys_get_temp_dir() . "/dompdf-options-" . uniqid("", true);
+        $chrootDir = $baseDir . "/sandbox/root";
+        $missingFile = $chrootDir . "/missing.html";
+
+        mkdir($chrootDir, 0777, true);
+
+        try {
+            $options = new Options();
+            $options->setChroot([$chrootDir]);
+            $options->setRootDir($baseDir . "/not-used");
+
+            [$isValid, $message] = $options->validateLocalUri("file://" . $missingFile);
+
+            $this->assertFalse($isValid);
+            $this->assertSame("File not found.", $message);
+        } finally {
+            $this->removeDirectory($baseDir);
+        }
+    }
+
     public function testArtifactPathValidation()
     {
         $options = new Options();
@@ -418,5 +472,27 @@ class OptionsTest extends TestCase
         $log_path = null;
         $options->setLogOutputFile($log_path);
         $this->assertEquals($log_path, $options->getLogOutputFile());
+    }
+
+    private function removeDirectory(string $directory): void
+    {
+        if (!is_dir($directory)) {
+            return;
+        }
+
+        $iterator = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+
+        foreach ($iterator as $item) {
+            if ($item->isDir()) {
+                rmdir($item->getPathname());
+            } else {
+                unlink($item->getPathname());
+            }
+        }
+
+        rmdir($directory);
     }
 }

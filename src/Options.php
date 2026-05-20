@@ -1175,23 +1175,27 @@ class Options
         }
 
         $realfile = realpath(str_replace("file://", "", $uri));
+        if ($realfile === false) {
+            return [false, "File not found."];
+        }
 
         $dirs = $this->chroot;
         $dirs[] = $this->rootDir;
         $chrootValid = false;
         foreach ($dirs as $chrootPath) {
             $chrootPath = realpath($chrootPath);
-            if ($chrootPath !== false && strpos($realfile, $chrootPath) === 0) {
+            if ($chrootPath === false) {
+                continue;
+            }
+
+            $normalizedChrootPath = rtrim($chrootPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+            if ($realfile === $chrootPath || strncmp($realfile, $normalizedChrootPath, strlen($normalizedChrootPath)) === 0) {
                 $chrootValid = true;
                 break;
             }
         }
         if ($chrootValid !== true) {
             return [false, "Permission denied. The file could not be found under the paths specified by Options::chroot."];
-        }
-
-        if (!$realfile) {
-            return [false, "File not found."];
         }
 
         return [true, null];
