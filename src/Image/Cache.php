@@ -128,10 +128,15 @@ class Cache
                 throw new ImageException("Image not readable or empty", E_WARNING);
             }
 
-            list($width, $height, $type) = Helpers::dompdf_getimagesize($resolved_url, $options->getHttpContext());
+            list($width, $height, $type, , , , , $imageBytes) = Helpers::dompdf_getimagesize($resolved_url, $options->getHttpContext());
 
             if (($width && $height && in_array($type, ["gif", "png", "jpeg", "bmp", "svg","webp"], true)) === false) {
                 throw new ImageException("Image type unknown", E_WARNING);
+            }
+
+            $maxImageBytes = $options->getImageByteSizeLimit();
+            if ($width <= 0 || $height <= 0 || ($maxImageBytes > 0 && ($imageBytes === null || $imageBytes > $maxImageBytes))) {
+                throw new ImageException("Image dimensions or size exceed the configured limit", E_WARNING);
             }
 
             if ($type === "svg") {

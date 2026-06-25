@@ -467,6 +467,14 @@ abstract class AbstractRenderer
             || ($tmpFile !== null && file_exists($tmpFile));
 
         if (!$cached) {
+            // determmine if image is too big to be rendered
+            $maxImageBytes = $this->_dompdf->getOptions()->getImageByteSizeLimit();
+            $bgBytes = $bg_width * $bg_height * 4 * 4; // 4 channels with 4 bytes per channel (e.g. truecolor with alpha)
+            if ($maxImageBytes > 0 && ($bgBytes === null || $bgBytes > $maxImageBytes)) {
+                Helpers::record_warnings(E_USER_WARNING, "Background image dimensions are too large to be rendered (calculated size: " . round($bgBytes / 1048576, 2) . " MB).", __FILE__, __LINE__);
+                return;
+            }
+
             // img: image url string
             // img_w, img_h: original image size in px
             // width, height: box size in pt
@@ -510,21 +518,36 @@ abstract class AbstractRenderer
             }
 
             if ($src == null) {
+                if (isset($bg) && PHP_MAJOR_VERSION < 8) {
+                    imagedestroy($bg);
+                }
                 return;
             }
 
             if ($img_w != $org_img_w || $img_h != $org_img_h) {
-                $newSrc = imagecreatetruecolor($img_w, $img_h);
-                imagealphablending($newSrc, false);
-                imagesavealpha($newSrc, true);
-                imagecopyresampled($newSrc, $src, 0, 0, 0, 0, $img_w, $img_h, imagesx($src), imagesy($src));
-                if (PHP_MAJOR_VERSION < 8) {
-                    imagedestroy($src);
+                $imgBytes = $img_h * $img_h * 4 * 4; // 4 channels with 4 bytes per channel (e.g. truecolor with alpha)
+                if ($maxImageBytes > 0 && ($imgBytes === null || $imgBytes > $maxImageBytes)) {
+                    Helpers::record_warnings(E_USER_WARNING, "Background image is too large to be rendered (calculated size: " . round($imgBytes / 1048576, 2) . " MB).", __FILE__, __LINE__);
+                    if (PHP_MAJOR_VERSION < 8) {
+                        imagedestroy($src);
+                    }
+                    $src = null;
+                } else {
+                    $newSrc = imagecreatetruecolor($img_w, $img_h);
+                    imagealphablending($newSrc, false);
+                    imagesavealpha($newSrc, true);
+                    imagecopyresampled($newSrc, $src, 0, 0, 0, 0, $img_w, $img_h, imagesx($src), imagesy($src));
+                    if (PHP_MAJOR_VERSION < 8) {
+                        imagedestroy($src);
+                    }
+                    $src = $newSrc;
                 }
-                $src = $newSrc;
             }
 
             if ($src == null) {
+                if (isset($bg) && PHP_MAJOR_VERSION < 8) {
+                    imagedestroy($bg);
+                }
                 return;
             }
 
