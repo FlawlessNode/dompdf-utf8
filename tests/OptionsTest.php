@@ -19,6 +19,7 @@ class OptionsTest extends TestCase
         $this->assertEquals('letter', $option->getDefaultPaperSize());
         $this->assertEquals('serif', $option->getDefaultFont());
         $this->assertEquals(96, $option->getDpi());
+        $this->assertEquals($this->translateNumberStringToInt(ini_get('memory_limit')), $option->getImageByteSizeLimit());
         $this->assertEquals(1.1, $option->getFontHeightRatio());
         $this->assertFalse($option->getIsPhpEnabled());
         $this->assertFalse($option->getIsRemoteEnabled());
@@ -53,6 +54,7 @@ class OptionsTest extends TestCase
             'defaultPaperOrientation' => 'landscape',
             'defaultFont' => 'test8',
             'dpi' => 300,
+            'imageByteSizeLimit' => '50M',
             'fontHeightRatio' => 1.2,
             'isPhpEnabled' => true,
             'isRemoteEnabled' => true,
@@ -83,6 +85,7 @@ class OptionsTest extends TestCase
         $this->assertEquals('landscape', $option->getDefaultPaperOrientation());
         $this->assertEquals('test8', $option->getDefaultFont());
         $this->assertEquals(300, $option->getDpi());
+        $this->assertEquals($this->translateNumberStringToInt('50M'), $option->getImageByteSizeLimit());
         $this->assertEquals(1.2, $option->getFontHeightRatio());
         $this->assertTrue($option->getIsPhpEnabled());
         $this->assertTrue($option->getIsRemoteEnabled());
@@ -122,6 +125,7 @@ class OptionsTest extends TestCase
             'default_paper_orientation' => 'landscape',
             'default_font' => 'test8',
             'dpi' => 300,
+            'image_byte_size_limit' => '50M',
             'font_height_ratio' => 1.2,
             'is_php_enabled' => true,
             'is_remote_enabled' => true,
@@ -152,6 +156,7 @@ class OptionsTest extends TestCase
         $this->assertEquals('landscape', $option->getDefaultPaperOrientation());
         $this->assertEquals('test8', $option->getDefaultFont());
         $this->assertEquals(300, $option->getDpi());
+        $this->assertEquals($this->translateNumberStringToInt('50M'), $option->getImageByteSizeLimit());
         $this->assertEquals(1.2, $option->getFontHeightRatio());
         $this->assertTrue($option->getIsPhpEnabled());
         $this->assertTrue($option->getIsRemoteEnabled());
@@ -186,6 +191,7 @@ class OptionsTest extends TestCase
             'defaultPaperOrientation' => 'landscape',
             'defaultFont' => 'test8',
             'dpi' => 300,
+            'imageByteSizeLimit' => '50M',
             'fontHeightRatio' => 1.2,
             'isPhpEnabled' => true,
             'isRemoteEnabled' => true,
@@ -217,6 +223,7 @@ class OptionsTest extends TestCase
         $this->assertEquals('landscape', $option->get('defaultPaperOrientation'));
         $this->assertEquals('test8', $option->get('defaultFont'));
         $this->assertEquals(300, $option->get('dpi'));
+        $this->assertEquals($this->translateNumberStringToInt('50M'), $option->get('imageByteSizeLimit'));
         $this->assertEquals(1.2, $option->get('fontHeightRatio'));
         $this->assertTrue($option->get('isPhpEnabled'));
         $this->assertTrue($option->get('isRemoteEnabled'));
@@ -251,6 +258,7 @@ class OptionsTest extends TestCase
             'default_paper_orientation' => 'landscape',
             'default_font' => 'test8',
             'dpi' => 300,
+            'image_byte_size_limit' => '50M',
             'font_height_ratio' => 1.2,
             'is_php_enabled' => true,
             'is_remote_enabled' => true,
@@ -282,6 +290,7 @@ class OptionsTest extends TestCase
         $this->assertEquals('landscape', $option->get('default_paper_orientation'));
         $this->assertEquals('test8', $option->get('default_font'));
         $this->assertEquals(300, $option->get('dpi'));
+        $this->assertEquals($this->translateNumberStringToInt('50M'), $option->get('image_byte_size_limit'));
         $this->assertEquals(1.2, $option->get('font_height_ratio'));
         $this->assertTrue($option->get('is_php_enabled'));
         $this->assertTrue($option->get('is_remote_enabled'));
@@ -474,6 +483,24 @@ class OptionsTest extends TestCase
         $this->assertEquals($log_path, $options->getLogOutputFile());
     }
 
+    public function testImageSizeLimits()
+    {
+        $options = new Options();
+        $this->assertEquals($this->translateNumberStringToInt(ini_get('memory_limit')), $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit("twenty-five megabytes");
+        $this->assertEquals($this->translateNumberStringToInt(ini_get('memory_limit')), $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit("50M");
+        $this->assertEquals($this->translateNumberStringToInt("50M"), $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit("50K");
+        $this->assertEquals($this->translateNumberStringToInt("50K"), $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit("50G");
+        $this->assertEquals($this->translateNumberStringToInt("50G"), $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit(50000000);
+        $this->assertEquals(50000000, $options->getImageByteSizeLimit());
+        $options->setImageByteSizeLimit(-1);
+        $this->assertEquals(-1, $options->getImageByteSizeLimit());
+    }
+
     private function removeDirectory(string $directory): void
     {
         if (!is_dir($directory)) {
@@ -494,5 +521,19 @@ class OptionsTest extends TestCase
         }
 
         rmdir($directory);
+    }
+
+    private function translateNumberStringToInt($value)
+    {
+        if (preg_match('/^(\\d+)([KMG])$/i', $value, $matches)) {
+            if (strtoupper($matches[2]) == 'K') {
+                $value = (int)$matches[1] * 1024;
+            } elseif (strtoupper($matches[2]) == 'M') {
+                $value = (int)$matches[1] * 1024 * 1024;
+            } elseif (strtoupper($matches[2]) == 'G') {
+                $value = (int)$matches[1] * 1024 * 1024 * 1024;
+            }
+        }
+        return is_numeric($value) ? (int)$value : 0;
     }
 }

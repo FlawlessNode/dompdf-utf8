@@ -6,6 +6,24 @@ use Dompdf\Tests\TestCase;
 
 class HelpersTest extends TestCase
 {
+    public static function imageUrlProvider(): array
+    {
+        return [
+            [realpath(__DIR__ . "/_files/jamaica.jpg"), [2048, 1536, 'jpeg', IMAGETYPE_JPEG, 'image/jpeg', 3, 8, 9437184]],
+            [realpath(__DIR__ . "/_files/square.svg"), [100, 100, 'svg', defined('IMAGETYPE_SVG') ? IMAGETYPE_SVG : null, 'image/svg+xml', 4, 32, 160000]],
+            [realpath(__DIR__ . "/_files/bad.bmp"), [6000, 6000, 'bmp', IMAGETYPE_BMP, 'image/bmp', 3, 24, 324000000]]
+        ];
+    }
+
+    /**
+     * @dataProvider imageUrlProvider
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('imageUrlProvider')]
+    public function testUrlResolution(string $url, array $expected): void
+    {
+        $this->assertEquals($expected, Helpers::dompdf_getimagesize($url));
+    }
+
     public static function uriEncodingProvider(): array
     {
         return [
