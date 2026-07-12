@@ -22,15 +22,10 @@ Dompdf UTF-8
  * MBString extension
  * php-font-lib
  * php-svg-lib
- 
-Note that some required dependencies may have further dependencies 
-(notably php-svg-lib requires sabberworm/php-css-parser).
-
-### Recommendations
-
  * GD (for image processing)
    * Additionally, the IMagick or GMagick extension improves image processing performance for certain image types
- * OPcache (OPcache, XCache, APC, etc.): improves performance
+ 
+Note that some required dependencies may have further dependencies.
 
 Visit the wiki for more information:
 https://github.com/flawlessnode/dompdf-utf8/wiki/Requirements
