@@ -1325,6 +1325,10 @@ EOL;
             if (preg_match($pattern, $css, $matches, PREG_OFFSET_CAPTURE, $start)) {
                 $len = $matches[0][1] - $start;
             }
+            if ($len <= 0) {
+                $offset = $start + 5;
+                continue;
+            }
             $data_uri = substr($css, $start, $len);
             $data_uri_hash = md5($data_uri);
             $this->_blobs[$data_uri_hash] = $data_uri;
