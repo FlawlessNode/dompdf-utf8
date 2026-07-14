@@ -284,7 +284,7 @@ class StyleTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('cssImageNoBaseHrefProvider')]
     public function testCssImageNoBaseHref(string $value, $expected): void
     {
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf(["isRemoteEnabled" => true]);
         $sheet = new Stylesheet($dompdf);
         $sheet->set_base_path(__DIR__); // Treat stylesheet as being located in this directory
         $s = new Style($sheet);
@@ -303,7 +303,7 @@ class StyleTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('cssImageWithBaseHrefProvider')]
     public function testCssImageWithBaseHref(string $value, $expected): void
     {
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf(["isRemoteEnabled" => true]);
         $dompdf->setProtocol("https://");
         $dompdf->setBaseHost("example.com");
         $dompdf->setBasePath("/");
@@ -325,7 +325,7 @@ class StyleTest extends TestCase
     #[\PHPUnit\Framework\Attributes\DataProvider('cssImageWithStylesheetBaseHrefProvider')]
     public function testCssImageWithStylesheetBaseHref(string $value, $expected): void
     {
-        $dompdf = new Dompdf();
+        $dompdf = new Dompdf(["isRemoteEnabled" => true]);
         $sheet = new Stylesheet($dompdf);
         $sheet->set_protocol("https://");
         $sheet->set_host("example.com");
